@@ -1,3 +1,5 @@
+import { Component } from 'react';
+
 import AppInfo from '../app-info/app-info';
 import SearchPanel from '../search-panel/search-panel';
 import AppFilter from '../app-filter/app-filter';
@@ -6,26 +8,56 @@ import EmployeesAddForm from '../employees-add-form/employees-add-form';
 
 import './app.css';
 
-function App() {
+class App extends Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            data: [
+                {name: 'Jhon C.', salary: 100, increase: false, id: 1},
+                {name: 'Alex M.', salary: 2000, increase: true, id: 2},
+                {name: 'Carl W.', salary: 30000, increase: false, id: 3},
+            ]
+        }
+        this.maxId = 4;
+    }
+
+    deleteItem = (id) => {
+        // console.log(id);
+        this.setState(({data}) => {
+            //не очень удобный метод но рабочий
+            // const index = data.findIndex(elem => elem.id === id);
+            // const befor = data.slice(0, index);
+            // const after = data.slice(index + 1);
+            // const newArr = [...befor, ...after];
+            // return { 
+            //     data: newArr
+            // }
+
+            //Нельзя использовать это мутирует элемент тобишь изменяет его накорню это неправильно в реакте соответствноо нам нужно создавать копию нового элемента для того что бы не мутировать корень программы
+            // data.splice(index, 1);
+
+            return { 
+                data: data.filter(item => item.id !== id)
+            }
+        });
+    }
+
+    render() {
+        return (
+            <div className="app">
+                <AppInfo/>
+                <div className='search-panel'>
+                    <SearchPanel/>
+                    <AppFilter/>
+                </div>
     
-    const data = [
-        {name: 'Jhon C.', salary: 100, increase: false, id: 1},
-        {name: 'Alex M.', salary: 2000, increase: true, id: 2},
-        {name: 'Carl W.', salary: 30000, increase: false, id: 3},
-    ];
-
-    return (
-        <div className="app">
-            <AppInfo/>
-            <div className='search-panel'>
-                <SearchPanel/>
-                <AppFilter/>
+                <EmployeesList 
+                data={this.state.data}
+                onDelete={this.deleteItem}/>
+                <EmployeesAddForm/>
             </div>
-
-            <EmployeesList data={data}/>
-            <EmployeesAddForm/>
-        </div>
-    );
+        );
+    }
 }
 
 export default App;
