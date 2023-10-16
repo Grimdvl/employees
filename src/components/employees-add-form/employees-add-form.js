@@ -18,6 +18,13 @@ class EmployeesAddForm extends Component {
         })
     }
 
+    onCreate = (e) => {
+        e.preventDefault();
+        this.setState({
+            
+        })
+    }
+
     render() {
         const{name, salary} = this.state;
 
@@ -40,7 +47,8 @@ class EmployeesAddForm extends Component {
                         onChange={this.onValueChange}/>
     
                     <button type="submit"
-                            className="btn btn-outline-light">Add</button>
+                            className="btn btn-outline-light"
+                            onClick={this.onCreate}>Add</button>
                 </form>
             </div>
         );
