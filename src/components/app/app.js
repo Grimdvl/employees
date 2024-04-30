@@ -15,7 +15,7 @@ function App() {
 
     return (
         <div className="app">
-            <AppInfo />
+            <AppInfo /> 
 
             <div className="search-panel">
                 <SearchPanel/>
